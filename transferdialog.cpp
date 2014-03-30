@@ -1,5 +1,7 @@
 #include <QtScript>
 #include <QScriptValueIterator>
+#include <QPushButton>
+#include <QRadioButton>
 
 #include "transferdialog.h"
 #include "webservice.h"

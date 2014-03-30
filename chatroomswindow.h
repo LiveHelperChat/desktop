@@ -2,6 +2,9 @@
 #define CHATROOMSWINDOW_H
 
 #include <QtGui>
+#include <QGroupBox>
+#include <QMdiArea>
+
 #include "ui_chatroomswidget.h"
 #include "mainwindow.h"
 

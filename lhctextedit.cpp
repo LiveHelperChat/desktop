@@ -10,8 +10,6 @@ LHCTextEdit::~LHCTextEdit()
 {
 
 
-
-
 }
 
 void LHCTextEdit::sendMessage() {

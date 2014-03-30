@@ -2,10 +2,18 @@
 #define CHATWINDOW_H
 
 #include <QtGui>
+#include <QComboBox>
 #include <QScriptEngine>
+#include <QPushButton>
+#include <QMdiArea>
+#include <QGroupBox>
+#include <QLabel>
+#include <QSplitter>
+#include <QMdiSubWindow>
+#include <QMediaPlayer>
 
-#include <phonon/audiooutput.h>
-#include <phonon/mediaobject.h>
+//#include <phonon/audiooutput.h>
+//#include <phonon/mediaobject.h>
 
 #include "ui_chatwidget.h"
 #include "lhctextedit.h"
@@ -33,7 +41,7 @@ public:
         void sendMessageClicked();
         void cannedChanged(int);
 
-        void stateChanged(Phonon::State newState, Phonon::State oldState);
+        //void stateChanged(Phonon::State newState, Phonon::State oldState);
 
 private:
    
@@ -77,8 +85,10 @@ private:
 
     bool asTab,separateWindow;
     
-    Phonon::MediaObject *mediaObject;
-    Phonon::AudioOutput *audioOutput;
+    QMediaPlayer *playerSound;
+
+    //Phonon::MediaObject *mediaObject;
+    //Phonon::AudioOutput *audioOutput;
 
 
 

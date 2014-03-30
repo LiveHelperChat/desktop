@@ -1,13 +1,13 @@
 #include <QApplication>
 #include <QDebug>
 #include <QSslConfiguration>
+#include <QCryptographicHash>
 
 #include "webservice.h"
 #include "logindialog.h"
 
 
 //#define DEBUG
-
 
 LhcWebServiceClient *LhcWebServiceClient::instance() {
 static LhcWebServiceClient* fac = 0;
@@ -26,27 +26,21 @@ if (fac == 0 ) {
     }
 }
 return fac;
-};
-
+}
 
 LhcWebServiceClient::LhcWebServiceClient()
 {
-
     QSslConfiguration sslCfg = QSslConfiguration::defaultConfiguration();
     QList<QSslCertificate> ca_list = sslCfg.caCertificates();
     QList<QSslCertificate> ca_new = QSslCertificate::fromData("CaCertificates");
     ca_list += ca_new;
     sslCfg.setCaCertificates(ca_list);
-    sslCfg.setProtocol(QSsl::TlsV1);
+    sslCfg.setProtocol(QSsl::TlsV1_1);
     QSslConfiguration::setDefaultConfiguration(sslCfg);
-
 
     URL = new QString();
     DomainURL = new QString();
-    URLPostAddress = new QString();
-    QhttpClient = new QHttp();
-    QHttpHeader = new QHttpRequestHeader();
-    connect(QhttpClient, SIGNAL(requestFinished(int,bool)), this, SLOT(requestFinished(int,bool)));
+    URLPostAddress = new QString();   
 
     #ifdef DEBUG
         qDebug("URL fetch constructor - %s", URL->toStdString().c_str());
@@ -57,54 +51,78 @@ LhcWebServiceClient::LhcWebServiceClient()
 /**
 * Sets main fetch url and headers
 */
-void LhcWebServiceClient::setFetchURL(QString urlFetch, QHttp::ConnectionMode mode)
+void LhcWebServiceClient::setFetchURL(QString urlFetch, bool mode)
 {
     *URL = urlFetch;
     QStringList lst( URL->split ("/") );
     QStringList::Iterator it2 = lst.begin();
     *DomainURL= *it2;
     *URLPostAddress = URL->replace(*DomainURL,"");
-
-    QhttpClient->setHost(*DomainURL,mode);
-
-    QHttpHeader->setRequest("POST", *URLPostAddress);
-    QHttpHeader->setValue("Host", *DomainURL);
-    QHttpHeader->setValue("User-Agent", "Live helper chat XML client");
-    QHttpHeader->setContentType("application/x-www-form-urlencoded");
+    *DomainURL = (mode == false ? QString("http://") : QString("https://"))+*DomainURL;
 
     #ifdef DEBUG
-        qDebug("URL fetch assigned - %s", URLPostAddress->toStdString().c_str());
+        qDebug("URL fetch assigned - %s", DomainURL->toStdString().c_str());
     #endif
+}
 
+
+QString LhcWebServiceClient::startRequest(QUrl url, bool executeCallback = false)
+{
+    QNetworkReply *reply = qnam.get(QNetworkRequest(url));
+    if (executeCallback == true){
+        reply->setProperty("url_request", QVariant(url.toString()));
+        connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
+    }
+
+    return url.toString();
+}
+
+QString LhcWebServiceClient::startRequest(QUrl url, QUrl urlData, bool executeCallback = false)
+{
+    QNetworkRequest request = QNetworkRequest(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/x-www-form-urlencoded"));
+
+    QNetworkReply *reply = qnam.post(request,urlData.toEncoded());
+
+    QString hashString = (url.toString()+urlData.toString());
+    QString requestMD5 = QString(QCryptographicHash::hash((hashString.toStdString().c_str()),QCryptographicHash::Md5).toHex());
+
+    if (executeCallback == true){
+        reply->setProperty("url_request", QVariant(requestMD5));
+        connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
+    }
+
+    return requestMD5;
 }
 
 void LhcWebServiceClient::LhcSendRequestAuthorization(QStringList query,QString address,QObject* pt2Object, void (*pt2Function)(void* pt2Object, QByteArray))
 {
 
-    QString searchStrin = query.join("&");
-    QHttpHeader->setRequest("POST", *URLPostAddress+"index.php"+address);
+        QString searchStrin = query.join("&");
 
-    OperationQueStruc reqstruc;
-    reqstruc.pt2Function = pt2Function;
-    reqstruc.pt2Object = pt2Object;
+        OperationQueStruc reqstruc;
+        reqstruc.pt2Function = pt2Function;
+        reqstruc.pt2Object = pt2Object;
 
-    this->OperQuee.insert(QhttpClient->request(*QHttpHeader,searchStrin.toUtf8()), reqstruc);
+        #ifdef DEBUG
+            qDebug("URL fetch assigned - %s", QUrl(*DomainURL+*URLPostAddress+"index.php"+address).toString().toStdString().c_str());
+        #endif
+
+        this->OperQuee.insert(this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(searchStrin),true), reqstruc);
 }
 
 /**
 * Used for standard request with logins
 */
 void LhcWebServiceClient::LhcSendRequest(QStringList query,QString address,QObject* pt2Object, void (*pt2Function)(void* pt2Object, QByteArray))
-{
-
+{    
     QString searchStrin = query.join("&")+"&username="+username+"&password="+password;
-    QHttpHeader->setRequest("POST", *URLPostAddress+"index.php"+address);
 
     OperationQueStruc reqstruc;
     reqstruc.pt2Function = pt2Function;
     reqstruc.pt2Object = pt2Object;
 
-    this->OperQuee.insert(QhttpClient->request(*QHttpHeader,searchStrin.toUtf8()), reqstruc);
+    this->OperQuee.insert(this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(searchStrin),true), reqstruc);
 }
 
 /**
@@ -114,42 +132,35 @@ void LhcWebServiceClient::LhcSendRequest(QStringList query,QString address,QObje
 */
 void LhcWebServiceClient::LhcSendRequest(QString address,QObject* pt2Object, void (*pt2Function)(void* pt2Object, QByteArray))
 {
-
-    QHttpHeader->setRequest("POST", *URLPostAddress+"index.php"+address);
+    QString searchStrin = "username="+username+"&password="+password;
 
     OperationQueStruc reqstruc;
     reqstruc.pt2Function = pt2Function;
     reqstruc.pt2Object = pt2Object;
 
-    QString auth = "username="+username+"&password="+password;
-
-    this->OperQuee.insert(QhttpClient->request(*QHttpHeader,auth.toUtf8()), reqstruc);
+    this->OperQuee.insert(this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(searchStrin),true), reqstruc);
 }
 
 void LhcWebServiceClient::LhcSendRequest(QStringList query,QString address)
 {
     QString searchString = query.join("&");
-    QHttpHeader->setRequest("POST", *URLPostAddress+"index.php"+address);
     searchString = searchString + "&username="+username+"&password="+password;
-    QhttpClient->request(*QHttpHeader,searchString.toUtf8());
+    this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(searchString),false);
 }
-
 
 void LhcWebServiceClient::LhcSendRequest(QString address)
 {
-    QHttpHeader->setRequest("POST", *URLPostAddress+"index.php"+address);
     QString auth = "username="+username+"&password="+password;
-    QhttpClient->request(*QHttpHeader,auth.toUtf8());
-    //qDebug("Debug %s",address.toStdString().c_str());
+    this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(auth),false);
 }
 
-void LhcWebServiceClient::requestFinished(int requestID,bool error)
+void LhcWebServiceClient::requestFinished()
 {
 
     #ifdef DEBUG
-        if (error == true)
-            qDebug("Could not connect - %s",QhttpClient->errorString().toStdString().c_str());
-        else
+       // if (error == true)
+            //qDebug("Could not connect - %s",QhttpClient->errorString().toStdString().c_str());
+        //else
             //qDebug("Succesfuly connected - %s",QhttpClient->errorString().toStdString().c_str());
             //qDebug("Request finished %d",requestID);
             //qDebug("Request finished value %d",this->OperQuee.value(requestID));
@@ -157,23 +168,36 @@ void LhcWebServiceClient::requestFinished(int requestID,bool error)
             //this->OperQuee.value(requestID);
     #endif
 
+        QString requestID;
+        QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
 
-    if (!this->OperQuee.isEmpty())
-    {
-        if (this->OperQuee.contains(requestID) && error == false)
-        {
-            QByteArray result = QhttpClient->readAll();
-            OperationQueStruc reqstruc = static_cast< OperationQueStruc > (this->OperQuee.take(requestID));
+        if (reply) {
+            if (reply->error() == QNetworkReply::NoError) {
+                requestID = reply->property("url_request").toString();
 
-            // Associated with Quarded pointers,
-            // if some object destroyed before request finishes.
-            if (reqstruc.pt2Object)
-            reqstruc.pt2Function(reqstruc.pt2Object,result);
+                #ifdef DEBUG
+                    qDebug("Finished request with ID - %s",requestID.toStdString().c_str());
+                #endif
 
-        } else {
-            this->OperQuee.take(requestID);
+                if (!this->OperQuee.isEmpty())
+                {
+                    if (this->OperQuee.contains(requestID) && reply->error() == QNetworkReply::NoError)
+                    {
+                        QByteArray result = reply->readAll();
+                        OperationQueStruc reqstruc = static_cast< OperationQueStruc > (this->OperQuee.take(requestID));
+
+                        //  Associated with Quarded pointers,
+                        // if some object destroyed before request finishes.
+                        if (reqstruc.pt2Object)
+                        reqstruc.pt2Function(reqstruc.pt2Object,result);
+
+                    } else {
+                        this->OperQuee.take(requestID);
+                    }
+                }
+            };
+            reply->deleteLater();
         }
-    }
 }
 
 

@@ -24,4 +24,3 @@ void LoginDialogBase::on_cancelButton_clicked()
 {
 	
 }
-

@@ -1,9 +1,16 @@
-#include <QtNetwork/QHttp>
-#include <QtNetwork/QHttpRequestHeader>
+//#include <QtNetwork/QHttp>
+//#include <QtNetwork/QHttpRequestHeader>
+
 #include <QStringList>
 #include <QPointer>
 #include <QtNetwork/QNetworkAccessManager>
 #include "objectfactory.h"
+
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QUrl>
+
 
 // Used quarded pointer to avoid dandling pointers.
 // @see http://doc.trolltech.com/4.5/qpointer.html
@@ -14,7 +21,7 @@ struct OperationQueStruc {
     QPointer<QObject> pt2Object;
 };
 
-typedef QMap<int, OperationQueStruc> mapOperation;
+typedef QMap<QString, OperationQueStruc> mapOperation;
 
 
 class LhcWebServiceClient : public ObjectFactory
@@ -53,19 +60,19 @@ protected:
 
 
 public slots:
-        void setFetchURL(QString urlFetch, QHttp::ConnectionMode mode = QHttp::ConnectionModeHttp);
+        void setFetchURL(QString urlFetch, bool mode = false);
 
 private slots:
-        void requestFinished(int requestID,bool error);
-private:
-    //QNetworkAccessManager *QhttpClient;
-    //QNetworkRequest *QHttpHeader;
-    //QNetworkReply *currentReply;
+        void requestFinished();
 
-    QHttp *QhttpClient;
-    QHttpRequestHeader *QHttpHeader;
+private:   
 
+    // POST
+    QString startRequest(QUrl url,QUrl urlData, bool executeCallback);
 
-    //QHttpRequestHeader *QHttpHeader;
+    // GET
+    QString startRequest(QUrl url, bool executeCallback);
 
+    QUrl url;
+    QNetworkAccessManager qnam;
 };

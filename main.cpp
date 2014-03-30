@@ -46,8 +46,8 @@ LoginDialog *lgnDialog = new LoginDialog(0,true);
 
 if(!lgnDialog->exec())
 {
-    QTimer::singleShot(250, qApp, SLOT(quit()));
-}
+    QTimer::singleShot(250, qApp, SLOT(quit())); 
+} 
 
 delete lgnDialog;
 

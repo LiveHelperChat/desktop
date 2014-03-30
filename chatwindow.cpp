@@ -3,7 +3,8 @@
 #include <QScriptEngine>
 #include <QScriptValueIterator>
 #include <QTextEdit>
-
+#include <QMessageBox>
+#include <QScrollBar>
 
 #include "chatwindow.h"
 #include "webservice.h"
@@ -130,45 +131,10 @@ ChatWindow::ChatWindow(int chat_id, QWidget *parent) : QWidget(parent)
 
     ui.vboxLayout1->addLayout(mainGrindLayout);
 
-
-    audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory, this);
-    mediaObject = new Phonon::MediaObject(this);
-    Phonon::createPath(mediaObject, audioOutput);
-
-    connect(mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-                 this, SLOT(stateChanged(Phonon::State,Phonon::State)));
+    playerSound = new QMediaPlayer();
 
     // Initial reques, actualy we could take data from parent window. But we have to update it's state so we send initial request.
     LhcWebServiceClient::instance()->LhcSendRequest("/xml/chatdata/"+QString::number(this->chatID),(QObject*) this, ChatWindow::getDataChat);
-
-}
-
-void ChatWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState */)
-{
-     switch (newState) {
-         case Phonon::ErrorState:
-             if (mediaObject->errorType() == Phonon::FatalError) {
-                 QMessageBox::warning(this, tr("Fatal Error"),
-                 mediaObject->errorString());
-             } else {
-                 QMessageBox::warning(this, tr("Error"),
-                 mediaObject->errorString());
-             }
-             break;
-         case Phonon::PlayingState:
-
-                 break;
-         case Phonon::StoppedState:
-
-                 break;
-         case Phonon::PausedState:
-
-                 break;
-         case Phonon::BufferingState:
-                 break;
-         default:
-             ;
-     }
 }
 
 void ChatWindow::cannedChanged(int index)
@@ -322,8 +288,9 @@ void ChatWindow::receivedMessages(void* pt2Object, QScriptValue result)
 
         if (mySelf->newmessageText->messageSend == false) {
             if ( QFile::exists(qApp->applicationDirPath() + "/sounds/new_message.mp3") ) {
-                mySelf->mediaObject->setCurrentSource(Phonon::MediaSource(qApp->applicationDirPath() + "/sounds/new_message.mp3"));
-                mySelf->mediaObject->play();
+                mySelf->playerSound->setMedia(QUrl::fromLocalFile(qApp->applicationDirPath() + "/sounds/new_message.mp3"));
+                mySelf->playerSound->setVolume(100);
+                mySelf->playerSound->play();
             }
         }
 

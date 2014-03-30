@@ -5,6 +5,7 @@
 #include <QScriptEngine>
 #include <QScriptValueIterator>
 #include <QtGui>
+#include <QMessageBox>
 
 LoginDialog::LoginDialog(QWidget *parent,bool canautologin) : LoginDialogBase(parent)
 {
@@ -50,13 +51,13 @@ void LoginDialog::canContinue()
             LhcWebServiceClient *lhwsc = LhcWebServiceClient::instance();
             QString host = ui.HostEdit->text().replace(QString("index.php"), QString(""));
 
-            QHttp::ConnectionMode mode;
+            bool mode;
 
             if (host.indexOf("https://") != -1){
-                mode = QHttp::ConnectionModeHttps;
+                mode = true;
                 host = host.replace(QString("https://"),QString(""));
             } else {
-                mode = QHttp::ConnectionModeHttp;
+                mode = false;
                 host = host.replace(QString("http://"),QString(""));
             }
 
@@ -97,6 +98,7 @@ void LoginDialog::LoginCheckedCallback(void* pt2Object, QByteArray result)
 
 void LoginDialog::on_okButton_clicked()
 {
+
 	lgUserName = ui.UsernameEdit->text();
 
 	if (!lgUserName.isEmpty())
@@ -107,13 +109,13 @@ void LoginDialog::on_okButton_clicked()
 			if (!lgUserPassword.isEmpty())
 			{
                 QString host = ui.HostEdit->text().replace(QString("index.php"), QString(""));
-                QHttp::ConnectionMode mode;
+                bool mode;
 
                 if (host.indexOf("https://") != -1){
-                    mode = QHttp::ConnectionModeHttps;
+                    mode = true;
                     host = host.replace(QString("https://"),QString(""));
                 } else {
-                    mode = QHttp::ConnectionModeHttp;
+                    mode = false;
                     host = host.replace(QString("http://"),QString(""));
                 }
 
@@ -135,7 +137,7 @@ void LoginDialog::on_okButton_clicked()
                             pmsettings->setAttribute("remember","false");
                         }
 
-                        pmsettings->setAttribute("host", (mode == QHttp::ConnectionModeHttp ? "http://" : "https://")+host);
+                        pmsettings->setAttribute("host", (mode == true ? "https://" : "http://")+host);
 
                         if (ui.AutoLogincheckBox->isChecked())
 							pmsettings->setAttribute("autologin","true");

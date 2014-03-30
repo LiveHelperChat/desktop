@@ -1,7 +1,8 @@
 #include <QDebug>
 #include <QtGui>
 #include <QScriptEngine>
-
+#include <QMenu>
+#include <QSplitter>
 
 #include "chatroomswindow.h"
 #include "lhtablewidget.h"

@@ -6,14 +6,18 @@
 #include <QSystemTrayIcon>
 #include <QLabel>
 #include <QtGui>
+#include <QMediaPlayer>
 #include <qaction.h>
 
-#include <phonon/audiooutput.h>
-#include <phonon/mediaobject.h>
+
+//#include <phonon/audiooutput.h>
+//#include <phonon/mediaobject.h>
+
 
 class MainWidget;
 class LoginDialog;
 class QMdiArea;
+
 
 class MainWindow : public QMainWindow
 {
@@ -142,9 +146,7 @@ private:
     int chatID;
     int chatMode;
 
-    Phonon::MediaObject *mediaObject;
-    Phonon::AudioOutput *audioOutput;
-
+    QMediaPlayer *playerSound;
 }; 
 
 #endif

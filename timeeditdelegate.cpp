@@ -58,7 +58,7 @@ void TimeEditDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     value = index.data(Qt::CheckStateRole);
     if (value.isValid()) {
         checkState = static_cast<Qt::CheckState>(value.toInt());
-        checkRect = check(opt, opt.rect, value);
+        //checkRect = check(opt, opt.rect, value);
     }
 
     // do the layout

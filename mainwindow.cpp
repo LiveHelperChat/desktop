@@ -1,7 +1,11 @@
 #include <QtGui>
 #include <QtPlugin>
-#include <QWorkspace>
+#include <QMdiArea>
 #include <Qt>
+#include <QMessageBox>
+#include <QStatusBar>
+#include <QMenu>
+#include <QMenuBar>
 
 #include "mainwindow.h"
 #include "logindialog.h"
@@ -45,9 +49,7 @@ MainWindow::MainWindow()
     this->chatID = 0;
     this->chatMode = 0;
 
-    audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory, this);
-    mediaObject = new Phonon::MediaObject(this);
-    Phonon::createPath(mediaObject, audioOutput);
+    playerSound = new QMediaPlayer();
 
     this->chatRooms();
 
@@ -101,9 +103,10 @@ void MainWindow::showToolTipNewChat(int chat_id, int chat_mode)
         this->chatID = chat_id;
         this->chatMode = chat_mode;
 
-        if ( QFile::exists(qApp->applicationDirPath() + "/sounds/new_chat.mp3") ) {
-            this->mediaObject->setCurrentSource(Phonon::MediaSource(qApp->applicationDirPath() + "/sounds/new_chat.mp3"));
-            this->mediaObject->play();
+        if ( QFile::exists(qApp->applicationDirPath() + "/sounds/new_chat.mp3") ) {                   
+            this->playerSound->setMedia(QUrl::fromLocalFile(qApp->applicationDirPath() + "/sounds/new_chat.mp3"));
+            this->playerSound->setVolume(100);
+            this->playerSound->play();
         }
     }
 
@@ -239,8 +242,8 @@ void MainWindow::about()
 {
     QMessageBox box(this);
     box.setTextFormat(Qt::RichText);
-    box.setText(tr("<center>Live helper chat</center> <p>System purpose is to give Live helper chat desktop interface.</p><p>This is 1.57 version of desktop client.</p>"));
-    box.setWindowTitle(QApplication::translate("AboutDialog", "For web app since 1.57v Live Helper Chat version."));
+    box.setText(tr("<center>Live helper chat</center> <p>System purpose is to give Live helper chat desktop interface.</p><p>This is 1.93 version of desktop client.</p>"));
+    box.setWindowTitle(QApplication::translate("AboutDialog", "For web app since 1.93v Live Helper Chat version."));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 }

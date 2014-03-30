@@ -3,7 +3,7 @@
 #include <QString>
 #include <QtXml/QDomDocument>
 #include <QtGui>
-
+#include <QMessageBox>
 
 #include "pmsettings.h"
 

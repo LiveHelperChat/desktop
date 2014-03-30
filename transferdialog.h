@@ -4,6 +4,9 @@
 #include <QtGui>
 #include <QDialog>
 #include <QButtonGroup>
+#include <QSpacerItem>
+#include <QGroupBox>
+#include <QVBoxLayout>
 
 class LhcTransferDialog : public QDialog
 {

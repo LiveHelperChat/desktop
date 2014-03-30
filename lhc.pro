@@ -3,35 +3,34 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = lhc
 DEPENDPATH += . ui generatedfiles
 INCLUDEPATH += .
-
 
 # Input
 HEADERS += logindialog.h \
            logindialogbase.h \
-		   mainwidget.h \
+           mainwidget.h \
            mainwindow.h \
            pmsettings.h \
-		   chatroomswindow.h \
-		   lhtablewidget.h \
-		   webservice.h \
-		   objectfactory.h \
-		   chatwindow.h \
-		   lhctextedit.h \
-		   lhchatsynchro.h \
-		   transferdialog.h \
-                   timeeditdelegate.h \
-                   privatemessage.h \
-                   onlineuserinfo.h
+           chatroomswindow.h \
+           lhtablewidget.h \
+           webservice.h \
+           objectfactory.h \
+           chatwindow.h \
+           lhctextedit.h \
+           lhchatsynchro.h \
+           transferdialog.h \
+           timeeditdelegate.h \
+           privatemessage.h \
+           onlineuserinfo.h
 
 		   
-FORMS +=   ui/logindialogbase.ui \
-		   ui/chatroomswidget.ui \
-                   ui/chatwidget.ui \
-                   ui/privatemessage.ui \
-                   ui/onlineuserinfo.ui
+FORMS +=  ui/logindialogbase.ui \
+          ui/chatroomswidget.ui \
+          ui/chatwidget.ui \
+          ui/privatemessage.ui \
+          ui/onlineuserinfo.ui
 
 SOURCES += logindialog.cpp \
            logindialogbase.cpp \
@@ -39,26 +38,24 @@ SOURCES += logindialog.cpp \
            pmsettings.cpp \
            mainwidget.cpp \
            mainwindow.cpp \
-		   chatroomswindow.cpp \
-		   lhtablewidget.cpp \
-		   webservice.cpp \
-		   objectfactory.cpp \
-		   chatwindow.cpp \
-		   lhctextedit.cpp \
-		   lhchatsynchro.cpp \
-		   transferdialog.cpp \
-                   timeeditdelegate.cpp \
-                   privatemessage.cpp \
-                   onlineuserinfo.cpp
+           chatroomswindow.cpp \
+           lhtablewidget.cpp \
+           webservice.cpp \
+           objectfactory.cpp \
+           chatwindow.cpp \
+           lhctextedit.cpp \
+           lhchatsynchro.cpp \
+           transferdialog.cpp \
+           timeeditdelegate.cpp \
+           privatemessage.cpp \
+           onlineuserinfo.cpp
 
  RESOURCES += lhc.qrc
  RC_FILE = lhc.rc
 
-#wince*{
-# DEPLOYMENT_PLUGIN += phonon_ds9 phonon_waveout
-#}
-
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core
 QT += xml
 QT += network
 QT += script
-QT += phonon
+QT += multimedia
