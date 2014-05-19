@@ -31,6 +31,8 @@ public:
     */
     QAction *onlineofflineAct;
 
+    QAction *onlineofflineAutoAct;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -41,7 +43,9 @@ private slots:
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void ChangeStatusBar(const QString &newStatus);
     void messageClicked();
-    
+
+    void mouseTimerTick();
+
     /**
     * Connection management
     */
@@ -58,12 +62,23 @@ private slots:
     void chatOnlineStatus();
 
     /**
+    * Automatically change online offline status
+    */
+    void chatOnlineAutoStatus();
+
+    /**
     * About action
     */
     void about();
        
     
 private:
+
+
+    QPoint mouseLastPos;
+    QTimer *mouseTimer;
+    quint32 mouseIdleSeconds;
+    quint32 offlineTimeout;
 
 	/**
 	* Crate menu actions

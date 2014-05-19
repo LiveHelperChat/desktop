@@ -6,4 +6,6 @@
  <autologin>en</autologin>
  <language>en</language>
  <remember>false</remember>
+ <autooffline>0</autooffline>
+ <offlinetimeout>180</offlinetimeout>
 </pmsettings>

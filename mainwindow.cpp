@@ -12,6 +12,7 @@
 #include "chatroomswindow.h"
 #include "chatwindow.h"
 #include "webservice.h"
+#include "pmsettings.h"
 
 /**
 *Class constructor
@@ -54,8 +55,47 @@ MainWindow::MainWindow()
     this->chatRooms();
 
     this->getOnlineStatus();
+
+    //Init
+    mouseTimer = new QTimer();
+    mouseLastPos = QCursor::pos();
+    mouseIdleSeconds = 0;
+
+    //Connect and Start
+    connect(mouseTimer, SIGNAL(timeout()), this, SLOT(mouseTimerTick()));
+
+
+    PMSettings *pmsettings = new PMSettings();
+    offlineTimeout = pmsettings->getAttributeSettings("offlinetimeout").toInt();
+    onlineofflineAutoAct->setChecked(pmsettings->getAttributeSettings("autooffline").toInt() == 1);
+    if (onlineofflineAutoAct->isChecked()){
+        mouseTimer->start(1000);
+    }
+
+    delete pmsettings;
 }
 
+void MainWindow::mouseTimerTick()
+{
+    QPoint point = QCursor::pos();
+    if(point != mouseLastPos)
+        mouseIdleSeconds = 0;
+    else
+        mouseIdleSeconds++;
+
+    mouseLastPos = point;
+
+    if (this->onlineofflineAutoAct->isChecked()) {
+
+        if (offlineTimeout < mouseIdleSeconds) {
+            this->onlineofflineAct->setChecked(false);
+            LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/1");
+        } else {
+            this->onlineofflineAct->setChecked(true);
+            LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/0");
+        }
+    }
+}
 
 void MainWindow::ChangeStatusBar(const QString &newStatus)
 {
@@ -209,6 +249,11 @@ void MainWindow::createActions()
     onlineofflineAct->setCheckable(true);
     connect(onlineofflineAct, SIGNAL(triggered()), this, SLOT(chatOnlineStatus()));
 
+    onlineofflineAutoAct = new QAction(tr("Auto online/offline"), this);
+    onlineofflineAutoAct->setStatusTip(tr("Allow automatically change online/offline status"));
+    onlineofflineAutoAct->setCheckable(true);
+    connect(onlineofflineAutoAct, SIGNAL(triggered()), this, SLOT(chatOnlineAutoStatus()));
+
     aboutAct = new QAction(tr("About"), this);
     aboutAct->setStatusTip(tr("About the program"));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
@@ -231,6 +276,23 @@ void MainWindow::chatOnlineStatus()
         LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/1");
     }
 }
+
+void MainWindow::chatOnlineAutoStatus()
+{
+    PMSettings *pmsettings = new PMSettings();
+    if (this->onlineofflineAutoAct->isChecked()) {
+        pmsettings->setAttribute("autooffline","1");
+        mouseTimer->start(1000);
+    } else {
+        pmsettings->setAttribute("autooffline","0");
+        mouseTimer->stop();
+    };
+    pmsettings->sync();
+
+    delete pmsettings;
+}
+
+
 
 void MainWindow::changeConnection()
 {
@@ -274,6 +336,7 @@ void MainWindow::createMainMenu()
     chatMenu = menuBar()->addMenu(tr("&Chats"));
     chatMenu->addAction(chatroomsAct);
     chatMenu->addAction(onlineofflineAct);
+    chatMenu->addAction(onlineofflineAutoAct);
 
 	managementMenu = menuBar()->addMenu(tr("&Management"));
     managementMenu->addAction(connectionAct);
