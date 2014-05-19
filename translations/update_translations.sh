@@ -72,6 +72,12 @@ curl -L --user $1:$2 -X GET https://www.transifex.com/api/2/project/live-helper-
 echo "Updating bg_BG translations"
 curl -L --user $1:$2 -X GET https://www.transifex.com/api/2/project/live-helper-chat/resource/translation_desktopts/translation/bg_BG?file=1 > lhc_bg.ts
 
+echo "Updating sk_SK translations"
+curl -L --user $1:$2 -X GET https://www.transifex.com/api/2/project/live-helper-chat/resource/translation_desktopts/translation/sk_SK?file=1 > lhc_sk.ts
+
+echo "Updating ka translations"
+curl -L --user $1:$2 -X GET https://www.transifex.com/api/2/project/live-helper-chat/resource/translation_desktopts/translation/ka?file=1 > lhc_ka.ts
+
 echo "Generating translations"
 /usr/lib64/qt4/bin/lrelease lhc_ar.ts
 /usr/lib64/qt4/bin/lrelease lhc_br.ts
@@ -99,7 +105,5 @@ echo "Generating translations"
 /usr/lib64/qt4/bin/lrelease lhc_da.ts
 /usr/lib64/qt4/bin/lrelease lhc_bg.ts
 /usr/lib64/qt4/bin/lrelease lhc_ro.ts
-
-echo "Copying files"
-/bin/cp -rf ./*.qm ../../lhc_dc/windows_qt_4x/translations/
-/bin/cp -rf ./*.qm ../../lhc_dc/mac_qt_4x/lhc.app/Contents/MacOS/translations/
+/usr/lib64/qt4/bin/lrelease lhc_ka.ts
+/usr/lib64/qt4/bin/lrelease lhc_sk.ts

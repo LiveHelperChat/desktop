@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sk_SK" version="2.0">
 <context>
     <name>LHQTableWidget</name>
     <message>
@@ -7,15 +7,15 @@
     </message>
     <message>
         <source>Nick</source>
-        <translation>Nick</translation>
+        <translation>Prezývka</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Tiempo</translation>
+        <translation>Čas</translation>
     </message>
     <message>
         <source>Referrer</source>
-        <translation>Referente</translation>
+        <translation>Referrer</translation>
     </message>
     <message>
         <source>IP</source>
@@ -23,98 +23,98 @@
     </message>
     <message>
         <source>E-mail</source>
-        <translation>Correo</translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <source>Department</source>
-        <translation>Departamento</translation>
+        <translation>Oddelenie</translation>
     </message>
 	<message>
         <source>Browser</source>
-        <translation>Navegador</translation>
+        <translation>Prehliadač</translation>
     </message>
 	<message>
         <source>Last visit</source>
-        <translation>Última visita</translation>
+        <translation>Posledná návšteva</translation>
     </message>
 	<message>
         <source>First visit</source>
-        <translation>Primera visita</translation>
+        <translation>Prvá návšteva</translation>
     </message>
 	<message>
         <source>Country</source>
-        <translation>País</translation>
+        <translation>Krajina</translation>
     </message>
 	<message>
         <source>Operator message</source>
-        <translation>Mensaje del operador</translation>
+        <translation>Správa operátora</translation>
     </message>
 	<message>
         <source>Pages viewed</source>
-        <translation>Páginas vistas</translation>
+        <translation>Prezreté stránky</translation>
     </message>
 </context>
 <context>
     <name>ChatWidget</name>
     <message>
         <source>Live helper chat - chat</source>
-        <translation>Chat</translation>
+        <translation>Live helper chat - rozhovory</translation>
     </message>
 </context>
 <context>
     <name>privatemessage</name>
     <message>
         <source>Type your message:</source>
-        <translation>Escriba su mensaje:</translation>
+        <translation>Napíšte vašu správu:</translation>
     </message>
 	<message>
         <source>Send message</source>
-        <translation>Enviar mensaje</translation>
+        <translation>Odoslať správu</translation>
     </message>
 	<message>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>Zatvoriť</translation>
     </message>
 </context>
 <context>
     <name>onlineuserinfo</name>
     <message>
         <source>User info</source>
-        <translation>Información del usuario</translation>
+        <translation>Info o užívateľovi</translation>
     </message>
 	<message>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>Zatvoriť</translation>
     </message>
 </context>
 <context>
     <name>ChatRoomsWidget</name>
     <message>
         <source>Live helper chat - chat rooms</source>
-        <translation>Salas de chat</translation>
+        <translation>Live helper chat - miestnosti rozhovorov</translation>
     </message>
 </context>
 <context>
     <name>LoginDialogBase</name>
     <message>
         <source>Please login</source>
-        <translation>Por favor, inicie sesión</translation>
+        <translation>Prosím prihláste sa</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Zrušiť</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario</translation>
+        <translation>Užívateľské meno</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>Heslo</translation>
     </message>
     <message>
         <source>Host</source>
@@ -122,234 +122,234 @@
     </message>
     <message>
         <source>Autologin</source>
-        <translation>Inicio de sesión automático</translation>
+        <translation>Auto-prihlásenie</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
         <source>Authentication failed</source>
-        <translation>Error de autenticación</translation>
+        <translation>Overenie zlyhalo</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varovanie</translation>
     </message>
     <message>
         <source>The host field is empty!</source>
-        <translation>El campo de host está vacío!</translation>
+        <translation>Pole hosť je prázdne</translation>
     </message>
     <message>
         <source>The password field is empty!</source>
-        <translation>El campo de la contraseña está vacía!</translation>
+        <translation>Pole heslo je prázdne!</translation>
     </message>
     <message>
         <source>The username field is empty!</source>
-        <translation>El nombre de usuario está vacío!</translation>
+        <translation>Pole užívateľské meno je prázdne!</translation>
     </message>
 </context>
 <context>
     <name>LhcTransferDialog</name>
     <message>
         <source>Chat transfer</source>
-        <translation>Transferencia de chat</translation>
+        <translation>Presunúť rozhovor</translation>
     </message>
     <message>
         <source>Online users</source>
-        <translation>Usuarios en línea</translation>
+        <translation>Užívatelia on-line</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Zrušiť</translation>
     </message>
 </context>
 <context>
     <name>ChatRoomsWindow</name>
     <message>
         <source>Add chat</source>
-        <translation>Añadir chat</translation>
+        <translation>Pridať rozhovor</translation>
     </message>
 	<message>
         <source>Accept chat</source>
-        <translation>Aceptar chat</translation>
+        <translation>Prijať rozhovor</translation>
     </message>
     <message>
         <source>Open in a new window</source>
-        <translation>Abrir en una nueva ventana</translation>
+        <translation>Otvoriť v novom okne</translation>
     </message>
     <message>
         <source>Open in a new separate window</source>
-        <translation>Abrir en una nueva ventana independiente</translation>
+        <translation>Otvoriť v novom oddelenom okne</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation>Cargando...</translation>
+        <translation>Načítavanie...</translation>
     </message>
     <message>
         <source>Close chat</source>
-        <translation>Cerrar chat</translation>
+        <translation>Zatvoriť rozhovor</translation>
     </message>
     <message>
         <source>Delete chat</source>
-        <translation>Eliminar chat</translation>
+        <translation>Zmazať rozhovor</translation>
     </message>
     <message>
         <source>Reject chat</source>
-        <translation>Rechazar chat</translation>
+        <translation>Odmietnúť rozhovor</translation>
     </message>
     <message>
         <source>Pending chats</source>
-        <translation>Chats pendientes</translation>
+        <translation>Čakajúci na rozhovor</translation>
     </message>
     <message>
         <source>Transfered chats</source>
-        <translation>Chats transferidos</translation>
+        <translation>Presunuté rozhovory</translation>
     </message>
 	<message>
         <source>Online Users</source>
-        <translation>Usuarios en línea</translation>
+        <translation>Používatelia on-line</translation>
     </message>
     <message>
         <source>Active chats</source>
-        <translation>Chats activos</translation>
+        <translation>Prebiehajúce rozhovory</translation>
     </message>
 	<message>
         <source>Send private message</source>
-        <translation>Enviar mensaje privado</translation>
+        <translation>Zaslať súkromnú správu</translation>
     </message>
 	<message>
         <source>View user information</source>
-        <translation>Ver la información del usuario</translation>
+        <translation>Pozrieť informácie o užívateľovi</translation>
     </message>
     <message>
         <source>Closed chats</source>
-        <translation>Chats cerrados</translation>
+        <translation>Ukončené rozhovory</translation>
     </message>
 </context>
 <context>
     <name>ChatWindow</name>
     <message>
         <source>User left chat</source>
-        <translation>Usuario abandonó el chat</translation>
+        <translation>Užívateľ opustil rozhovor</translation>
     </message>
 	<message>
         <source>Send</source>
-        <translation>Enviar</translation>
+        <translation>Odoslať</translation>
     </message>
     <message>
         <source>Choose canned message</source>
-        <translation>Elija mensaje predefinido</translation>
+        <translation>Vyberte pripravenú správu</translation>
     </message>
     <message>
         <source>User joined chat</source>
-        <translation>Usuario se unió al chat</translation>
+        <translation>Užívateľ sa pripojil do rozhovoru</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation>Acciones</translation>
+        <translation>Akcie</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>información</translation>
+        <translation>Informácie</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation>Cargando...</translation>
+        <translation>Načítavanie...</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation>Propietario</translation>
+        <translation>Držiteľ</translation>
     </message>
     <message>
         <source>responsable</source>
-        <translation>responsable</translation>
+        <translation>zodpovedný</translation>
     </message>
     <message>
         <source>Came from</source>
-        <translation>Vino de</translation>
+        <translation>Prišiel z</translation>
     </message>
 	<message>
         <source>Country</source>
-        <translation>País</translation>
+        <translation>Krajina</translation>
     </message>
     <message>
         <source>E-mail</source>
-        <translation>Correo</translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Chyba</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Live helper chat</source>
-        <translation>Chat</translation>
+        <translation>Live helper chat</translation>
     </message>
     <message>
         <source>New request</source>
-        <translation>Nueva petición</translation>
+        <translation>Nová požiadavka</translation>
     </message>
     <message>
         <source>You have a new chat pending. To start the chat click me.</source>
-        <translation>Usted tiene una nueva conversación pendiente. Para iniciar el chat haga clic aquí.</translation>
+        <translation>Máte nový čakajúci rozhovor. Klikni tu pre začatie rozhovoru.</translation>
     </message>
     <message>
         <source>A new chat has been transferred to you. To start the chat click me.</source>
-        <translation>Le han transferido un nuevo chat. Para iniciar el chat haga clic aquí</translation>
+        <translation>Bol k vám presunutý nový rozhovor. Klikni tu pre začatie rozhovoru.</translation>
     </message>
     <message>
         <source>Waiting for action...</source>
-        <translation>Esperando...</translation>
+        <translation>Čaká sa za akciou...</translation>
     </message>
     <message>
         <source>&amp;Restore</source>
-        <translation>&amp;Restaurar</translation>
+        <translation>&amp;Obnoviť</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>S&amp;alir</translation>
+        <translation>&amp;Ukončiť</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>C&amp;errar</translation>
+        <translation>U&amp;končiť</translation>
     </message>
     <message>
         <source>Login as</source>
-        <translation>Entrar como</translation>
+        <translation>Prihlásiť sa ko</translation>
     </message>
     <message>
         <source>Chat rooms</source>
-        <translation>Salas de chat</translation>
+        <translation>Miestnosti</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>O nás</translation>
     </message>
     <message>
         <source>About the program</source>
-        <translation>Acerca del programa</translation>
+        <translation>O programe</translation>
     </message>
     <message>
         <source>&amp;Actions</source>
-        <translation>&amp;Acciones</translation>
+        <translation>&amp;Akcie</translation>
     </message>
     <message>
         <source>&amp;Chats</source>
-        <translation>&amp;Chats</translation>
+        <translation>&amp;Rozhovory</translation>
     </message>
     <message>
         <source>&amp;Management</source>
-        <translation>Mane&amp;jo</translation>
+        <translation>&amp;Správa</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>A&amp;yuda</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
 </context>
 </TS>

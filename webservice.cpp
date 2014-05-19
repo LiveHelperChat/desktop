@@ -35,7 +35,7 @@ LhcWebServiceClient::LhcWebServiceClient()
     QList<QSslCertificate> ca_new = QSslCertificate::fromData("CaCertificates");
     ca_list += ca_new;
     sslCfg.setCaCertificates(ca_list);
-    sslCfg.setProtocol(QSsl::TlsV1_1);
+    sslCfg.setProtocol(QSsl::SslV3);
     QSslConfiguration::setDefaultConfiguration(sslCfg);
 
     URL = new QString();
