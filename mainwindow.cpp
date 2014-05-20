@@ -78,7 +78,8 @@ MainWindow::MainWindow()
 void MainWindow::mouseTimerTick()
 {
     QPoint point = QCursor::pos();
-    if(point != mouseLastPos)
+
+    if (point != mouseLastPos && point.rx() < 1000000 && point.ry() < 100000)
         mouseIdleSeconds = 0;
     else
         mouseIdleSeconds++;
@@ -88,11 +89,15 @@ void MainWindow::mouseTimerTick()
     if (this->onlineofflineAutoAct->isChecked()) {
 
         if (offlineTimeout < mouseIdleSeconds) {
-            this->onlineofflineAct->setChecked(false);
-            LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/1");
+            if (this->onlineofflineAct->isChecked()){
+                this->onlineofflineAct->setChecked(false);
+                LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/1");
+            }
         } else {
-            this->onlineofflineAct->setChecked(true);
-            LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/0");
+            if (!this->onlineofflineAct->isChecked()){
+                this->onlineofflineAct->setChecked(true);
+                LhcWebServiceClient::instance()->LhcSendRequest("/xml/setonlinestatus/0");
+            }
         }
     }
 }
