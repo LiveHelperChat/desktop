@@ -132,7 +132,7 @@ void LhcWebServiceClient::LhcSendRequest(QStringList query,QString address,QObje
 */
 void LhcWebServiceClient::LhcSendRequest(QString address,QObject* pt2Object, void (*pt2Function)(void* pt2Object, QByteArray))
 {
-    QString searchStrin = "username="+username+"&password="+password;
+    QString searchStrin = "username="+QUrl::toPercentEncoding(username)+"&password="+QUrl::toPercentEncoding(password);
 
     OperationQueStruc reqstruc;
     reqstruc.pt2Function = pt2Function;
@@ -144,13 +144,13 @@ void LhcWebServiceClient::LhcSendRequest(QString address,QObject* pt2Object, voi
 void LhcWebServiceClient::LhcSendRequest(QStringList query,QString address)
 {
     QString searchString = query.join("&");
-    searchString = searchString + "&username="+username+"&password="+password;
+    searchString = searchString + "&username="+QUrl::toPercentEncoding(username)+"&password="+QUrl::toPercentEncoding(password);
     this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(searchString),false);
 }
 
 void LhcWebServiceClient::LhcSendRequest(QString address)
 {
-    QString auth = "username="+username+"&password="+password;
+    QString auth = "username="+QUrl::toPercentEncoding(username)+"&password="+QUrl::toPercentEncoding(password);
     this->startRequest(QUrl(*DomainURL+*URLPostAddress+"index.php"+address),QUrl(auth),false);
 }
 

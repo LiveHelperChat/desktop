@@ -17,7 +17,7 @@ void LHCTextEdit::sendMessage() {
     if (!this->toPlainText().isEmpty())
     {
         QStringList requestString;
-        requestString.append("msg="+this->toPlainText());
+        requestString.append("msg="+QUrl::toPercentEncoding(this->toPlainText()));
         LhcWebServiceClient::instance()->LhcSendRequest(requestString,"/xml/addmsgadmin/"+QString::number(this->chatID));
 
         this->messageSend = true;
