@@ -69,8 +69,8 @@ void LoginDialog::canContinue()
             delete pmsettings;
 
             QStringList filter;
-            filter.append("username="+ui.UsernameEdit->text());
-            filter.append("password="+ui.PasswordEdit->text());
+            filter.append("username="+QUrl::toPercentEncoding(ui.UsernameEdit->text()));
+            filter.append("password="+QUrl::toPercentEncoding(ui.PasswordEdit->text()));
 
             lhwsc->setLogins(ui.UsernameEdit->text(),ui.PasswordEdit->text());
             lhwsc->LhcSendRequestAuthorization(filter,"/xml/checklogin/",(QObject*) this, LoginDialog::LoginCheckedCallback);
@@ -155,8 +155,8 @@ void LoginDialog::on_okButton_clicked()
                         lhwsc->setFetchURL(host,mode);
 
                         QStringList filter;
-                        filter.append("username="+lgUserName);
-                        filter.append("password="+lgUserPassword);
+                        filter.append("username="+QUrl::toPercentEncoding(lgUserName));
+                        filter.append("password="+QUrl::toPercentEncoding(lgUserPassword));
 
                         lhwsc->setLogins(lgUserName,lgUserPassword);
                         lhwsc->LhcSendRequestAuthorization(filter,"/xml/checklogin/",(QObject*) this, LoginDialog::LoginCheckedCallback);
