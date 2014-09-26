@@ -31,7 +31,9 @@ ChatRoomsWindow::ChatRoomsWindow( MainWindow *parent) : QWidget(parent)
     createPendingChatsTab();
     createActiveChatsTab();
     createClosedChatsTab();
+    createUnreadChatsTab();
     createOnlineUsersTab();
+
 
     // After all tabs created initialize mail layout
     ui.vboxLayout1->addWidget(ChatRoomstabWidget);
@@ -47,6 +49,7 @@ ChatRoomsWindow::ChatRoomsWindow( MainWindow *parent) : QWidget(parent)
     connect(activeChatsList, SIGNAL(customContextMenuRequested (const QPoint &)), this, SLOT(activeChatsMenu(QPoint)));
     connect(closedChatsList, SIGNAL(customContextMenuRequested (const QPoint &)), this, SLOT(closedChatsMenu(QPoint)));
     connect(transferedChatsList, SIGNAL(customContextMenuRequested (const QPoint &)), this, SLOT(transferedChatsMenu(QPoint)));
+    connect(unreadChatsList, SIGNAL(customContextMenuRequested (const QPoint &)), this, SLOT(activeChatsMenu(QPoint)));
     connect(OnlineUsersList, SIGNAL(customContextMenuRequested (const QPoint &)), this, SLOT(onlineUsersMenu(QPoint)));
 
     //Synchronize chats every 10 seconds.
@@ -443,6 +446,7 @@ void ChatRoomsWindow::receivedDataCallback(void* pt2Object, QByteArray result)
     mySelf->activeChatsList->setData(sc.property("active_chats"));
     mySelf->transferedChatsList->setData(sc.property("transfered_chats"));
     mySelf->OnlineUsersList->setData(sc.property("online_users"));
+    mySelf->unreadChatsList->setData(sc.property("unread_chats"));
 
     // Avoid tooltips on initial request
     if (mySelf->balloonEnabled == false && mySelf->parentWidget->onlineofflineAct->isChecked())
@@ -452,6 +456,7 @@ void ChatRoomsWindow::receivedDataCallback(void* pt2Object, QByteArray result)
 
         connect(mySelf->transferedChatsList, SIGNAL(newChatAdded(int,int)), mySelf->parentWidget, SLOT(showToolTipNewChat(int,int)));
         connect(mySelf->pendingChatsList, SIGNAL(newChatAdded(int,int)), mySelf->parentWidget, SLOT(showToolTipNewChat(int,int)));
+        connect(mySelf->unreadChatsList, SIGNAL(newChatAdded(int,int)), mySelf->parentWidget, SLOT(showToolTipNewChat(int,int)));
 
         mySelf->balloonEnabled = true;
     }
@@ -518,6 +523,35 @@ void ChatRoomsWindow::createActiveChatsTab()
 
     // Add tab
     ChatRoomstabWidget->addTab(tabActiveChats,tr("Active chats"));
+}
+
+void ChatRoomsWindow::createUnreadChatsTab()
+{
+    // Create tab layout
+    unreadChatsGroupBox = new QGroupBox(tr("Unread"));
+    unreadChatsListVBOX = new QVBoxLayout;
+
+    unreadChatsList = new LHQTableWidget(this);
+    unreadChatsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    unreadChatsList->setSelectionBehavior(QAbstractItemView::SelectRows);
+    unreadChatsList->setSelectionMode(QAbstractItemView::SingleSelection);
+    unreadChatsList->verticalHeader()->hide();
+    unreadChatsList->setAlternatingRowColors(true);
+    unreadChatsList->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    unreadChatsListVBOX->addWidget(unreadChatsList);
+    unreadChatsGroupBox->setLayout(unreadChatsListVBOX);
+
+    // Initialize main tab layout
+    unreadDataVBOX = new QVBoxLayout;
+    unreadDataVBOX->addWidget(unreadChatsGroupBox);
+
+    // Create tab container
+    tabUnreadChats = new QWidget();
+    tabUnreadChats->setLayout(unreadDataVBOX);
+
+    // Add tab
+    ChatRoomstabWidget->addTab(tabUnreadChats,tr("Unread chats"));
 }
 
 ChatRoomsWindow::~ChatRoomsWindow()
