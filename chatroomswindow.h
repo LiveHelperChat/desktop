@@ -25,7 +25,7 @@ private slots:
     // Main menus
     void pendingChatsMenu(QPoint p);
     void activeChatsMenu(QPoint p);
-    void closedChatsMenu(QPoint p);
+    void closedChatsMenu(QPoint p);    
     void transferedChatsMenu(QPoint p);
     void onlineUsersMenu(QPoint p);
 
@@ -62,6 +62,7 @@ private:
      void createPendingChatsTab();
      void createClosedChatsTab();
      void createActiveChatsTab();
+     void createUnreadChatsTab();
      void createOnlineUsersTab();
 
      QTabWidget *ChatRoomstabWidget;
@@ -75,6 +76,7 @@ private:
      LHQTableWidget 
          *pendingChatsList,
          *closedChatsList,
+         *unreadChatsList,
          *transferedChatsList,
          *activeChatsList,
          *OnlineUsersList;
@@ -95,6 +97,11 @@ private:
          * Deleted chats
          */
          *tabActiveChats,
+
+         /**
+         * Unread chats
+         */
+         *tabUnreadChats,
 
          /**
          * Online users
@@ -126,6 +133,11 @@ private:
         *activeChatsGroupBox,
 
         /**
+        * Unread tab groupbox
+        */
+        *unreadChatsGroupBox,
+
+        /**
         * Online users tab groupbox
         */
         *OnlineUsersGroupBox;
@@ -151,6 +163,12 @@ private:
         */
         *activeDataVBOX,
         *activeChatsListVBOX,
+
+        /**
+        * Deleted chats layouts
+        */
+        *unreadDataVBOX,
+        *unreadChatsListVBOX,
 
         /**
          * Online Users layouts
