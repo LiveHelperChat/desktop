@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow();
+    MainWindow(QString &settingsFilename);
     static void parseOnlineStatus(void* pt2Object, QByteArray result);
 
     /**
@@ -74,7 +74,7 @@ private slots:
     
 private:
 
-
+    QString settingsFilename;
     QPoint mouseLastPos;
     QTimer *mouseTimer;
     quint32 mouseIdleSeconds;

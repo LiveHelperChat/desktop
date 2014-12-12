@@ -7,9 +7,10 @@
 #include <QtGui>
 #include <QMessageBox>
 
-LoginDialog::LoginDialog(QWidget *parent,bool canautologin) : LoginDialogBase(parent)
+LoginDialog::LoginDialog(QWidget *parent,bool canautologin, QString *settingsFilename) : LoginDialogBase(parent)
 {
-	PMSettings *pmsettings = new PMSettings();
+	this->settingsFilename = *settingsFilename;
+	PMSettings *pmsettings = new PMSettings(this->settingsFilename);
 
 	ui.PasswordEdit->setText(pmsettings->getAttributeSettings("password"));
 	ui.HostEdit->setText(pmsettings->getAttributeSettings("host"));
@@ -45,7 +46,7 @@ void LoginDialog::on_cancelButton_clicked()
 
 void LoginDialog::canContinue()
 {
-        PMSettings *pmsettings = new PMSettings();
+		PMSettings *pmsettings = new PMSettings(settingsFilename);
         if (pmsettings->getAttributeSettings("autologin") == "true")
         {
             LhcWebServiceClient *lhwsc = LhcWebServiceClient::instance();
@@ -125,7 +126,7 @@ void LoginDialog::on_okButton_clicked()
 
                 if (!host.isEmpty())
 				{
-                        PMSettings *pmsettings = new PMSettings();
+						PMSettings *pmsettings = new PMSettings(settingsFilename);
 
                         if (ui.RememberLoginsChk->isChecked()){
                             pmsettings->setAttribute("username",lgUserName);

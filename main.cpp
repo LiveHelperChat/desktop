@@ -22,8 +22,12 @@ styleFile.open( QFile::ReadOnly );
 QString style( styleFile.readAll() );
 app.setStyleSheet( style );
 
-
-
+// Load settings from different location
+QString settingsFilename = qApp->applicationDirPath() + "/settings.xml";
+if(argc > 1)
+{
+    settingsFilename = QString::fromUtf8(argv[1]);
+}
 
 qApp->addLibraryPath( qApp->applicationDirPath() + "/plugins");
 
@@ -31,7 +35,7 @@ qApp->addLibraryPath( qApp->applicationDirPath() + "/plugins");
 
 QTranslator translator;
 
-PMSettings *pmsettings = new PMSettings();
+PMSettings *pmsettings = new PMSettings(settingsFilename);
 translator.load("translations/lhc_"+pmsettings->getAttributeSettings("language")+".qm");
 delete pmsettings;
 
@@ -42,7 +46,7 @@ QCoreApplication::setOrganizationName("Remdex");
 QCoreApplication::setOrganizationDomain("remdex.info");
 QCoreApplication::setApplicationName("Live helper chat");
 
-LoginDialog *lgnDialog = new LoginDialog(0,true);
+LoginDialog *lgnDialog = new LoginDialog(0,true,&settingsFilename);
 
 if(!lgnDialog->exec())
 {
@@ -52,8 +56,8 @@ if(!lgnDialog->exec())
 delete lgnDialog;
 
 
-MainWindow w;
-w.show();
+MainWindow *w = new MainWindow(settingsFilename);
+w->show();
 app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
 	return app.exec();
 

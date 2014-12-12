@@ -9,7 +9,7 @@ class LoginDialog : public LoginDialogBase
 	Q_OBJECT
 		
 	public:
-		LoginDialog(QWidget *parent = 0,bool canautologin = false);
+		LoginDialog(QWidget *parent = 0,bool canautologin = false, QString *settingsFilename = NULL);
 		~LoginDialog();
 
     static void LoginCheckedCallback(void* pt2Object, QByteArray result);
@@ -23,7 +23,8 @@ class LoginDialog : public LoginDialogBase
 	private:
     QString lgUserName,       ///< Vartotojo tapatybës vardas. 
             lgUserPassword,   ///< Vartotojo tapatybës slaptaþodis.
-            lgHost;           ///< Serverio adresas.
+			lgHost,           ///< Serverio adresas.
+			settingsFilename;
 
            
 };
