@@ -7,11 +7,11 @@
 
 #include "pmsettings.h"
 
-const QString PMSettings::filename = "settings.xml";
 
-PMSettings::PMSettings()
+PMSettings::PMSettings(QString &settingsFilename)
 {
 	doc = new QDomDocument;
+	this->settingsFilename = settingsFilename;
 	LoadSettings();
 };
 
@@ -22,7 +22,7 @@ PMSettings::~PMSettings()
 
 void PMSettings::LoadSettings( )
 {		
-	 QFile file(qApp->applicationDirPath()+"/"+PMSettings::filename);
+	 QFile file(this->settingsFilename);
 	 if (!file.open(QIODevice::ReadOnly))
 	 {
 		 	qDebug("cannot load settings file");
@@ -33,7 +33,7 @@ void PMSettings::LoadSettings( )
 	 {
 		 qDebug(file.readAll().toBase64());
 		 QMessageBox::warning(NULL, "Warning",
-                             PMSettings::filename,
+                             this->settingsFilename,
                              "&OK", QString::null , 0, 0, 1);
 
 		 file.close();
@@ -49,7 +49,7 @@ bool PMSettings::sync()
 	//qDebug("Document source new - %s",doc->toString().toStdString().c_str());
 
 
-	QFile fileOut(qApp->applicationDirPath()+"/"+PMSettings::filename);
+    QFile fileOut(this->settingsFilename);
     if (!fileOut.open(QIODevice::WriteOnly)) 
     {
 		return false;
