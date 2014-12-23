@@ -17,10 +17,11 @@
 /**
 *Class constructor
 **/
-MainWindow::MainWindow()
+MainWindow::MainWindow(QString &settingsFilename)
 {
     //QApplication::setStyle(QStyleFactory::create("cleanlooks"));
 
+    this->settingsFilename = settingsFilename;
 	mdiArea = new QMdiArea;
     setCentralWidget(mdiArea);
 
@@ -65,7 +66,7 @@ MainWindow::MainWindow()
     connect(mouseTimer, SIGNAL(timeout()), this, SLOT(mouseTimerTick()));
 
 
-    PMSettings *pmsettings = new PMSettings();
+    PMSettings *pmsettings = new PMSettings(settingsFilename);
     offlineTimeout = pmsettings->getAttributeSettings("offlinetimeout").toInt();
     onlineofflineAutoAct->setChecked(pmsettings->getAttributeSettings("autooffline").toInt() == 1);
     if (onlineofflineAutoAct->isChecked()){
@@ -290,7 +291,7 @@ void MainWindow::chatOnlineStatus()
 
 void MainWindow::chatOnlineAutoStatus()
 {
-    PMSettings *pmsettings = new PMSettings();
+    PMSettings *pmsettings = new PMSettings(settingsFilename);
     if (this->onlineofflineAutoAct->isChecked()) {
         pmsettings->setAttribute("autooffline","1");
         mouseTimer->start(1000);
@@ -307,7 +308,7 @@ void MainWindow::chatOnlineAutoStatus()
 
 void MainWindow::changeConnection()
 {
-    LoginDialog *lgnDialog = new LoginDialog();
+   LoginDialog *lgnDialog = new LoginDialog(0,false,& this->settingsFilename);
    lgnDialog->exec();
 }
 
