@@ -35,7 +35,7 @@ public:
     *
     * @author Remigijus Kiminas
     **/ 
-    PMSettings();
+    PMSettings(QString &settingsFilename);
 
 	/**
     * @brief Klasës konstruktorius.
@@ -54,7 +54,7 @@ public:
 private:
 
 	
-	static const QString filename; ///< Failas i kuri saugoma
+    QString settingsFilename; ///< Failas i kuri saugoma
 
 	
 
