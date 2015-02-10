@@ -354,7 +354,7 @@ void ChatWindow::getDataChat(void* pt2Object, QByteArray result)
 
     while (itt.hasNext()) {
           itt.next();
-          mySelf->cannedCombobox->addItem(itt.value().property("msg").toString());
+          mySelf->cannedCombobox->addItem(itt.value().property("msg").toString().replace("{nick}",mySelf->clientNick).replace("{operator}",sc.property("operator").toString()));
     }
 }
 
