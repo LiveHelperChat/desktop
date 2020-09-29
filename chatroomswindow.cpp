@@ -3,6 +3,7 @@
 #include <QScriptEngine>
 #include <QMenu>
 #include <QSplitter>
+#include <QHeaderView>
 
 #include "chatroomswindow.h"
 #include "lhtablewidget.h"

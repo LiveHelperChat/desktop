@@ -316,8 +316,8 @@ void MainWindow::about()
 {
     QMessageBox box(this);
     box.setTextFormat(Qt::RichText);
-    box.setText(tr("<center>Live helper chat</center> <p>System purpose is to give Live helper chat desktop interface.</p><p>This is 1.93 version of desktop client.</p>"));
-    box.setWindowTitle(QApplication::translate("AboutDialog", "For web app since 1.93v Live Helper Chat version."));
+    box.setText(tr("<center>Live helper chat</center> <p>System purpose is to give Live helper chat desktop interface.</p><p>This is 1.94 version of desktop client.</p>"));
+    box.setWindowTitle(QApplication::translate("AboutDialog", "For web app since 1.94v Live Helper Chat version."));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 }
